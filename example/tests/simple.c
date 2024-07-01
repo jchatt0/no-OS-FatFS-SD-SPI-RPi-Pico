@@ -152,3 +152,46 @@ void simple() {
     if (FR_OK != fr) printf("f_close error: %s (%d)\n", FRESULT_str(fr), fr);
     fflush(stdout);
 }
+
+void simple2()
+{
+
+    printf("\nSimple 2 Test\n");
+
+    char cwdbuf[FF_LFN_BUF - 12] = {0};
+    FRESULT fr = f_getcwd(cwdbuf, sizeof cwdbuf);
+    if (FR_OK != fr) {
+        printf("f_getcwd error: %s (%d)\n", FRESULT_str(fr), fr);
+        return;
+    }
+
+    FIL f;
+    // Display the numbers file
+    char pathbuf[FF_LFN_BUF] = {0};
+    snprintf(pathbuf, sizeof pathbuf, "%s/%s", cwdbuf, "example.bin");
+    printf("Opening \"%s\"... ", pathbuf);
+    fr = f_open(&f, pathbuf, FA_READ);
+    printf("%s\n", (FR_OK != fr ? "Fail :(" : "OK"));
+    if (FR_OK != fr) printf("f_open error: %s (%d)\n", FRESULT_str(fr), fr);
+    fflush(stdout);
+
+    printf("File content:\n");
+    for(int i = 0; i < 25; i++) {
+        // int c = f_getc(f);
+        char c;
+        UINT br;
+        fr = f_read(&f, &c, sizeof c, &br);
+        if (FR_OK != fr)
+            printf("f_read error: %s (%d)\n", FRESULT_str(fr), fr);
+        else
+            printf("%02x", c);
+    }
+
+    printf("\nClosing \"%s\"... ", pathbuf);
+    fr = f_close(&f);
+    printf("%s\n", (FR_OK != fr ? "Fail :(" : "OK"));
+    if (FR_OK != fr) printf("f_close error: %s (%d)\n", FRESULT_str(fr), fr);
+    fflush(stdout);
+
+
+}

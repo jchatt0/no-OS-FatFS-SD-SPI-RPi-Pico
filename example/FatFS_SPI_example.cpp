@@ -23,6 +23,7 @@ extern "C" {
     int lliot(size_t pnum);
     void ls(const char *dir);
     void simple();
+    void simple2();
     void big_file_test(const char *const pathname, size_t size,
                             uint32_t seed);
     void vCreateAndVerifyExampleFiles(const char *pcMountPath);
@@ -399,7 +400,7 @@ static cmd_def_t cmds[] = {
      "\te.g.: del_node /dir1"},
     {"ls", run_ls, "ls:\n  List directory"},
     {"cat", run_cat, "cat <filename>:\n  Type file contents"},
-    {"simple", simple, "simple:\n  Run simple FS tests"},
+    {"simple", simple2, "simple:\n  Run simple FS tests"},
     {"big_file_test", run_big_file_test,
      "big_file_test <pathname> <size in bytes> <seed>:\n"
      " Writes random data to file <pathname>.\n"
